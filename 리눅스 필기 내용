@@ -1,0 +1,675 @@
+
+ISO : 리눅스 설치 프로그램(www.centos.org)
+vmware : (vmware.com)
+
+1. Singke Booting Mode : OS 1개
+	
+2. Multi Booting Mode : OS 가 2개 이상
+
+3. Virtual Booting Mode : Folder형 (ex : VMWare, Oracle VirualBox
+
+
+centos 
+-------------
+설치
+edit -> virtual NetworkEditor->Bridged를 Realtek으로 잡아야함
+
+NAT -> subnetIP의 3번째 자리가 '10'이 되야함
+
+edit vitual machine settings ->  USB Cont부터 아래로 2개 총 3개 삭제
+---------------
+
+* 리눅스에서의 로그인 계정(User Account, 사용자 계정) 
+	-관리자    : root(윈도우에서는'administrator')
+	-일반사용자 : root를 제외한 모든 사용자
+	-리눅스에서는 
+
+*Putty를 이용한 원격접속
+
+------------------문법--------------
+*pwd : 현재 위치 확인
+ -문법 
+	# pwd
+ -실행
+	# pwd
+
+*cd 경로이동
+ -문법 	
+	# cd [디렉터리]  : 디렉터리의 경우는 맨 뒤에 '/'가 없어도 된다,.
+ -실행
+	# cd . : 현재 경로로 이동
+	# cd .. : 상위 경로로 이동
+	# cd ~ : 사용자의 홈디렉터리로 이동
+	# cd ~mall : 사용자 계정 홈디렉터리(/home/mall/)로 이동
+	# cd ~test : 오류(test는 일반 디렉터리)
+
+* ls : 디렉터리 내용 확인 (리눅스에서 가장많이 사용하는 명령어)
+ -문법
+	# ls [옵션1][옵션2]...<파일 또는 디렉터리>
+ -실행
+	# ls  	  : 현재 디렉터리 안에 있는 내용 출력
+	# ls -a   : 숨긴 내용(파일 또는 디렉터리)까지 출력
+	# ls -l   : 보다 자세한 내용을 출력(ls에서 가장 많이 사용하는 옵션)
+	# ls -l / : 경로 이동 없이 원하는 디렉터리 안에 있는 내용 출력
+	# ls -ld /media : 디렉터리(/media/) 자체의 속성을 출력
+	# ls -lR /home : 지정한 디렉터리(/home/) 안에 있는 내용을 보다 자세히 출력(하위 경로 포함)
+ ----------------------------------------------------
+*cp : 파일 또는 디렉터리 복사 (프린트 참고)
+ -문법
+	#cp [원본<파일/디렉터리>][사본<파일/디렉터리>]
+ -실행 
+	프린트 참고
+
+실습 1-1.
+# cp ../../backup/grub.cfg grub/cfg
+실습 1-2.
+# cp ../../etc/rc.d/../../var/../backup/inittab /home/samadal/
+실습 1-3.
+# cp ../../backup/../etc/../backup/login.defs /home/samadal/login
+
+
+
+ls -l . ../test/c/ : c디렉터리에 복사가 잘 되었는지 확인하는 법
+실습 2-1.
+# cp /home/samadal/grub.cfg ../test/c/
+실습 2-2.
+# cp inittab /home/test/c/
+실습 2-3.
+# cp /home/samadal/login /home/test/c/login.defs
+
+---------------------------------------
+
+*(와일드카드), ? ,@(at)
+
+# cp /home/test/c/d/gr*.c* ../test/c/d/in*t*b ./a/b/
+
+# cp -r : 디렉터리 복사
+	cp -r /backup/ . : backup 디렉터리를 현재 디렉터리에 복사
+--------------------------------------------
+*mv : 파일 또는 디렉터리 이동
+ -문법 및 사용법을 cp와 
+ -
+----------------------------------------
+*mkdir / rmdir : 디렉터리 생성/삭제
+ -문법
+	#mkdir [옵션] [디렉터리]
+	#rmdir [옵션] [디렉터리]
+-실행
+	필요에 따라서 상위 디렉터리까지 생성(-p, Parent)
+	# mkdir -p /home/samadal/a/b/e/f/g/  :디렉터리 한번에 만들어 버리기
+	
+	필요에 따라서 상위 디렉터리까지 삭제(빈 디렉터리만 대상)
+	# rmdir -p /home/samadal/a/b/e/f : 비어있는 디렉터리까지만 삭제
+ 
+-------------------------------------------
+*rm : 파일 또는 디렉터리 삭제
+ -문법 
+	#rm [옵션1][옵션2] 대상(파일 또는 디렉터리)
+ -실행
+ 	#rm grub.cfg : 삭제여부를 물어본다.
+	#rm -f grub.cfg : 삭제여부를 물어보지 않고 삭제한
+	#rm i* l* : i로 시작하는것들 ,l로 시작하는것들 전부 삭제
+
+	(-r) : 디렉터리까지 삭제가능
+	#rm -r grub.cfg : 삭제여부를 물어본다 
+	#rm -r i* l*
+---------------------------------------------
+passwd: P@ssw0rd
+---------------------------------------------
+*touch: 빈 문서 파일 생성
+ -문법 
+	#touch [파일명]
+	파일이 없는 경우 : 빈 문서 파일 생성
+	파일이 있는 경우 : 날짜 및 시간 정보 변경
+ -실행 
+----------------------------------------------
+* head /tail : 문서 파일의 상단에서/ 하단부터 내용출력
+ -문법 
+	#head[-숫자] [문서파일]
+	#tail [-숫자] [문서파일]
+ -실행
+	#cat /etc/passwd	:많은 내용이 출력
+
+	#head /etc/passwd   	:위에서 10줄 출력
+	#head -5 /etc/passwd	:위에서 5줄 출력
+
+	#tail /etc/passwd	:밑에서 10줄 출력
+	#tail -5 /etc/passwd	:밑에서 5줄 출력
+----------------------------------------------
+* more /nl/ less 	: 화면 분할 출력
+
+	# more /etc/passwd
+
+	# ls -l /etc/ | more
+
+	# nl /etc/passwd	:줄번호와 함께 출력
+
+	# less /etc/passwd	:검색 내용 재검색 (j : 한줄 아래로, k : 한줄 위로)
+
+-----------------------------------------------
+
+* cat(굉장히 많이 쓰이는 명령어)
+1. 파일 내용 출력
+	# cat /etc/passwd
+2. 출력 내용 파일로 저장
+	# cat /etc/passwd >(Redirection) /testfile
+#
+	# ls -l /etc/passwd /testfile
+3. 파일 생성
+	# cat a
+	samadal
+	madalgyo
+	0WonHara
+	입력후 Enter하고 Ctrl+d
+	(주의!!!!) 만약 cat >a 를 치고 그대로 빠져나오면 a의 내용 전부 삭제가 됨!
+4. 내용 추가
+	# cat >> a
+
+5. 병합
+	# cat a b > c :	위에서 부터 a,b 순서대로 병합
+	# cat b a > d : 위에서 부터 b,a 순서대로 병합
+
+--------------------------------------------------------
+* date 	: 현재 날짜 확인
+
+	# date [날짜][시간][년도]	 : 	날짜 바꾸기
+
+	# rdate -s time.bora.net :	현재 시간대로 바꾸기
+
+	# cal
+	# cal [년]
+	# cal [월][년]
+
+----------------------------------------------------------
+
+* find : 파일 또는 디렉터리 검색
+	# find [경로] [옵셥1][타입] [옵션2][타입] [옵션][타입]......[검색할 파일또는 디렉터리]
+
+
+
+--------------------------------------------------------------
+* vi
+
+1. 커서 이동
+	h 왼쪽
+	j 아래로
+	k 위로
+	l 오른쪽
+
+	w 단어차이로 이동
+	W 공백차이로 이동
+	
+	(H)ead	 보이는 화면 기준 맨위
+	(M)iddle 보이는 화면 기준 중간
+	tai(L)	 보이는 화면 기준 맨 아래
+
+	G 문서 마지막
+	g 문서 처음
+
+2. 입력
+	i : 커서 앞에다 입력
+	a : 커서 뒤에다 입력
+	O : 위에 빈줄 삽입
+	o : 아래 빈줄 삽입
+
+
+3. 검색
+	/[Pattern] , ?[Pattern]
+	
+	Pattern 이 검색된 후
+	/ - n 아래방향으로 찾기
+	  - N 위 방향으로 찾기
+	? - /과 반대
+
+4. 치환 ****
+	:[범위]s/[Old]/[New]/[옵션]
+	:10s/reside/samadal/	: 10번째 줄에서 치환
+	:25,28s/PASS/samadal/	: 25~28번째 줄에서 치환
+	:%s/PASS/samadal/	: 문서 전체에서 치환
+	
+	옵션 
+	-g 	: 그 라인의 포함된 모든 것들을 치환한다.
+	
+5. etc
+	:set nu		:LineNumber 활성화
+	:set nonu	:LineNumber 비활성화
+
+6. shell
+	:.!ls -l /backup/
+
+7. 저장
+	1. vi를 켠후
+	2. insert모드에서 내용입력
+	3. ESC 입력 후  :wq [파일명] (지정한 파일명으로 저장됨)
+	--------------------------
+	1. vi [파일명]
+	2. 위와 동일
+	3. ESC 입력 후  :wq (저장)
+
+8.
+	:r a(파일명) 현재라인 커서 밑에 a 내용 넣기
+	:r! (명령어) 커서 밑에 명령된 결과값 넣기
+
+9. 연습문제
+
+13번째 라인 밑에 자세한 출력 내용을 삽입
+
+파일 안에 있는 내용 변경
+
+5~12번째 라인을 2번째 라인 밑에 복사
+
+지금까지 작업한 모든 내용을 '/test/sam.txt'파일로 저장
+----------------------------------------------------------------
+소프트웨어와 하드를 연결해 주는것이 "커널" 이다.
+-----------------------------------------------------------------
+
+시스템 종료 :	shutdown -h now  / init 0 / poweroff / halt                                          
+	
+시스템 재시작 :	shutdown -r now / init 0 / reboot
+
+--------------------------------------------------------------
+
+*사용자
+1. 생성
+	# useradd [옵션1] [값1] [옵션2] [값2].... 사용자명
+	
+	# useradd -c testuser -s /bin/sh user2
+
+	 -> user2:x:1001:1001:testuser:/home/user2:/bin/sh
+
+	# useradd -s /bin/tcsh -d /week/linux user3
+
+	 -> user3:x:1002:1002::/week/linux:/bin/tcsh
+
+	# useradd -m -k /etc/samskel user5
+
+	 -> user5:x:1004:1004::/home/user5:/bin/bash
+
+2. 수정
+	# usermod [옵션1] [값1] [옵션2] [값2].... 사용자명
+3. 삭제
+	# userdel [옵션1] [값1] [옵션2] [값2].... 사용자명
+
+* 주의 사항 *
+※ 사용자 관련 중요 파일들(절~~~대!!! 편집해서는 안된다!!!)※
+	/etc/passwd, /etc/shadow, /etc/group
+※ 사용자 관련 디렉터리는 일반 디렉터리가 아니므로 절대 'rm'을 이용해서 삭제해서는 안된다.
+ 
+
+-------------------------------------------------------------
+samadal: x : 1000 : 1000 :samadal:   /home/samadal    :/bin/bash
+[사용자] [비번] [UID]  [GID]          [사용자계정 홈디렉터리]   [shell(명령어 해석기)]
+
+
+
+
+bin /sh  Bourne SHell
+
+bin / bash Bourne Again SHell
+[Linux 기본쉘]
+
+bin / ksh Korn SHell
+[unix 기본쉘]
+
+------------------------------------------------------------
+
+사용자지정 skel 다시 보자... 
+
+/usertest / test(사용자) / public(자동생성디렉터리)
+
+
+	# mkdir /etc/samskel/public
+
+ 	# useradd -d /usertest/test2 -m -k /etc/samskel test2
+-------------------------------------------------------------
+
+* 사용자 관련 기본설정
+1. useradd -D
+2. /etc/default/useraddd
+
+3. 연습문제
+Shell : tcsh 	:문서를 이용한 편집
+$HOME : /test 	:명령어를 이용한 편집
+SKEL  : /skelsam:문서를 이용한 편집
+User  : user7
+
+
+	# useradd -D -b /test
+
+	# vi /etc/defaults/useradd
+
+	# cp -r /etc/skel/.mozilla/ /skelsam/
+
+	# cp -r /etc/skel/* /skelsam
+
+	# cp -r /etc/skel/public/ /skelsam
+	
+	# useradd user7
+
+	# ls -al /test/user7
+
+---------------------------------------------------------------
+
+	# usermod [옵션1][값1] ... 사용자 
+
+	# usremod -d /export/home/user1 user1
+
+모든 사용자들이 '/export/home/' 안에서 잘 동작할 수 
+있도록 정보를 변경할 것
+
+	# useradd -d /week/user5 user5
+	# ls -l /week/
+	# mv /week/user5 /export/home/
+	# usermod -d /export/home/user5 user5
+----------------------------------------------------------------
+	
+	# userdel [옵션] 사용자
+
+	명령어		   계정삭제	  디렉터리삭제
+	# userdel user6	     O                X
+	# userdel -r user5   O                O
+		
+----------------------------------------------------------------
+	# mv /home/samadal /export/home/samadal
+	# usermod -d /export/home/samadal samadal	
+
+* 권한
+
+1. 허가권 : chmod [권한] 대상파일 or 디렉터리
+
+2. 소유권 : chown [UID: GID] 대상파일 or 디렉터리
+
+*
+-  ---   ---   ---
+   rwx   rwx   rwx
+   421   421   421 
+   owner/group/other
+	
+	맨앞자리 : -(file), d(디렉터리) 구별 해주는 역할
+	r : rAED 
+	w : wRITE
+	x : ExECUTE
+	
+ex) rwxr-x-r-x  -> 755
+    644         -> rw-r--r--
+
+
+'X'의 이미
+1. File(문서) : X가 없다
+2. File(실행) : 실행
+3. Directory : 접근,실행
+
+chmod 623 /export/home/inittab
+
+ u-r+x,g+rx-w,o+r-x /export/home/inittab
+
+-------------------------------------------
+
+cmd 창 
+
+*****ftp [ip주소]
+
+윈도우에서 리눅스 연결하는 법
+------------------------------------------
+*소유권
+	# chown samadal grub.cfg
+	# chown samadal:root inittab
+	# chown samadal:samadal login.defs
+	
+
+	# chown samadal.samadal grub.cfg
+	# chown .samadal inittab
+	# chown samadal. login.defs
+--------------------------------------------
+1. 소유권 : r,r / r,s / s,r /s,s  : r(root),s(samadal)
+2. 허가권 : 755, 375, 010, 273, 135, 316, 027
+3. /export/home/samadal/html/
+ 		var/www/html/
+: 허가권 소유권을 일치 시킨후 test 할 것
+4. 
+1) FTP접속이 가능한가?
+2) html 디렉터리가 보이는가?
+3) html 디렉터리 경로가 변경 가능한가?
+4) file upload가 가능한가?
+5) site 출력이 가능한가?
+
+--------------------------------------------------
+	|소유권  |     r, r
+   --------------------------------------  
+   허가권	|test   |1 | 2 | 3?| 4 | 5?
+  ---------------------------------------
+   755  |        O   O   O   O   x
+   375  |        O   O   O   x   x
+   010  |        x   O   O   x   x
+   273  |        O   O   O   O   O
+   135  |        O   O   O   x   x        
+   316  |        O   O   x   x   x
+   027  |        O   O   O   O   O
+---------------------------------------------------
+소유권  755    375     010   273    135     316    027
+rr  : oooxx/ oooxx/ ooxxx/ ooooo/ oooxx/ ooxxx/ ooooo
+rs  : oooxx/ ooooo/ oooxx/ ooooo/ ooooo/ oooxx/ ooxxx
+sr  : ooooo/ ooooo/ ooxxx/ ooxxx/ oooxx/ oooox/ ooxxx
+ss  : ooooo/ ooooo/ ooxxx/ ooxxx/ oooxx/ oooox/ ooxxx
+
+
+r,r 273
+samadal rwx --- ---  1) x로 인해 실행완료
+		     2) r로 인해 실해완료
+		     -----------------
+html 	-w- rwx -wx  3) o의 x로 인해 실행완료
+                     4) o의 w로 인해 실행완료
+		     5) 3번과 이유 동일
+s,r 273
+samadal rwx --- ---  1) x로 인해 실행완료
+		     2) r로 인해 실행완료
+		     -----------------
+html 	-w- rwx -wx  3) u의 x가 없음으로 불가
+                     4) 소유자가 samadal임으로 root에서 접근 불가
+
+		     5) 소유자가 samadal임으로 other에서 접근 불가
+(※패턴 파악)
+-------------------------------------------------------------
+
+
+1) # chown user6. user6/ ./user6/ .* user6/* : 완전제거 되지 않았던 user6 원상복구법
+2) # cd /var/spool/mail
+3) # ls -l
+4) # chown user6.mail user6
+cd
+--------------------------
+rws rwx rwx =>4777 : SetUID (가장많이 쓰임)
+ 
+rwx rws rwx =>2777 : SetGID
+
+rwx rwx rwt =>1777 : Sticky bit
+
+(※오직 관리자 권한으로 제한됨)
+---------------------------
+
+*Sticky bit
+
+  /sb  |  samadal    |  user1      |
+  755  | 생성 : x     | 생성 : x     |
+       | 삭제 : x     | 삭제 : x     |
+------------------------------------
+  777  | 생성 : o     | 생성 : o     |
+       | 삭제 : o | o | 삭제 : o | o | : 본인것도 삭제가능하고 다른사람것도 삭제 가능
+------------------------------------
+ 1777  | 생성 : o     | 생성 : o |   |
+       | 삭제 : o | x | 삭제 : o | x | : 본인것만 삭제가능하고 다른사람것은 삭제 불가능 : 일종의 읽기 권한
+
+
+------------------------------------------
+
+* 특수권한(umask)
+
+관리자 : 0022 , 사용자 : 0002
+
+Directory 1) 관리자 : d1 (755 = 777 - 022)- root
+<777>	  2) 사용자 : d2 (775 = 777 - 002)- samadal
+
+File      1) 관리자 : f1 (644 = 666 - 022)- root
+<666>     2) 사용자 : f2 (666 = 666 - 002)- samadal
+
+------------------------------------------
+
+   473	  1) d3 : 304      : umask 값
+	  2) f3 : 204(462)
+------------------------------------------
+* GNU 선언문 읽어보기
+-----------------------------------------
+(앞에 g 가 붙어있으면 무조건 GNU)
+
+
+* 압축 유틸리티
+ - gzip , bzip2
+	# gzip/gunzip [파일 또는 디렉터리] 
+         (압축 / 해제) 
+	# bzip2/bunzip2 [파일 또는 디렉터리] 
+	
+	*(bzip2가 압출효율이 뛰어나다)
+
+	* gzip 으로 개별 압축/해제가 가능하다.
+
+	  : # gzip grub.cfg.gz inittab.gz login.defs.gz
+
+ 	  : # gunzip grub.cfg.gz inittab.gz login.defs.gz
+
+	* # gunzip == # gzip -d 
+        
+ 	* 리눅스에서는 다중 압축이 될수 없다?
+		-> 단, 보관을 통해서만 다중압축이 가능하다.
+
+
+ -tar(Tape ARchive)
+	-보관
+		# tar cvf <Archiving File Name>.tar<File(s) or Directory(-ies)>
+	-해제
+		# tar xvf <Archiving File Name>.tar
+	-옵션
+		c create
+		v verbose == display, view 
+		f file
+		x execute == 풀어라
+		z : zip으로 한번더 압축해준다. => <파일명>.tar.gz 
+-----------------------------------------------------------
+실습)
+/bin 디렉토리의 모든 파일을 gzip압축 및 tar로 묶어서
+/home 디렉토리 안에 binlist.tar.gz 라는 파일로 생성
+-----------------------------------------------------------
+
+*Package(rpm, Redhat Package Manager)
+
+rpm -qa | grep vim 패키지 정보 질의
+
+rpm -e 패키지 삭제
+
+모든 작업은 대표 패키지 부터 작업한다.
+
+나머지는 화면에 보이는 순서대로 작업한다.
+
+rpm -ivh
+
+가급적 의존성 오류 무시 (--nodeps)
+
+모든 패키지는 반드시 버전을 일치시켜야한다.
+
+---------------------------------------------------------------
+
+*HDD & Partition
+
+=>주영역
+1. Primary partition
+=>확장영역
+2. Extended partition
+=>논리영역
+3. Logical partition
+
+|              P            |
+-----------------------------
+|       p      |     P      |
+-----------------------------
+|   P    |    P    |    P   |
+-----------------------------
+|   P  |   P  |   P  |   P  |
+-----------------------------
+|  p |  p |  p | E( c | c ) |
+-----------------------------
+|  p   |  p  | E( c | c | c)| 
+-----------------------------
+
+----------------------------------------------------------------------
+
+*HDD Type
+
+1. IDE (병렬) Type : hd +[문자]
+
+2. SCSI(직렬) Type : hd +[숫자]
+
+*Partition Type
+
+1. IDE Type HDD + [숫자]
+	->hda4,hdb7,hdc3.....
+
+2. SCSI Type HDD + [숫자]
+	->sda3,sda7,sdf6.....
+
+-----------------------------------------------------------------------
+
+프린트 125 
+
+파티션 생성 실습 -> 하드디스크 생성하기
+-------------------
+프린트 126, 맨아래 2개
+
+IDE    1GB
+-------------------
+
+--------------------------------------------------------------------------
+# fdisk -l /dev/hd*
+# fdisk -l /dev/sd*
+
+*MaKe File System ==>Format
+       => Partition
+
+# mkfs -t ext4 /dev/sdb1
+# mkfs.ext4 /dev/sdb1
+
+
+
+
+-----------------------------------------------------------
+
+1. 마운트 또는 언마운트시 마운트 포인트만 아니라면 어떤 곳이든 상관없다
+
+
+2. 한개의 파티션은 반드시 한개의 마운트 포인트만 가져야 한다.
+
+
+3. w-> 이 메시지 (...The new table will be used at the next reboot...)가 나타날 경우 반드시 재부팅 할 것
+ 
+
+4.사용자 관련 디렉터리는 절대로 마운트 포인트로 잡아선 안된다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
