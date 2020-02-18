@@ -85,6 +85,8 @@ Telnet (port 번호 : 23)
 2) # vi /etc/services에 들어가서 telnet의 포트번호 확인 해보기
 	(쉽게 확인하는 법 vi에서 /telnet (패턴검색) 하면 됨)
 3) # firewall-cmd --list-all : 방화벽에 등록된 애들 전부다 확인.
+   # firewall-cmd --list-ports : 방화벽에 등록된 포트 확인.
+   # firewall-cmd --list-services : 방화벽에 등록된 서비스 확인.
 4) # firewall-cmd --permanent --add-port=23/tcp
    # firewall-cmd --permanent --add-service=telnet
    # firewall-cmd -- reload
@@ -93,6 +95,7 @@ Telnet (port 번호 : 23)
 /etc/firewalld/zones 안에 public.xml 문서 파일이 있는데
 문서파일안에 실제 방화벽에 서비스와 포트번호의 정보가 들어있습니다.
 vi 를 이용해서 직접 방화벽에 정보를 수정하는 것도 가능합니다.
+# vi /etc/firewalld/zones/public.xml
 
 3. 데몬 재시작
 데몬(daemon) = 서비스가 동작하는 백그라운드 프로세스
@@ -157,13 +160,44 @@ vc/2
 ====================================================
 
 SHH : Secure Shell (port번호 : 22 )
+개요 : Telnet과 더불어  가장 많이 사용하는 원격 접속 서비스
+       평문 형태의 Telnet과 달리 암호화키를 이용한 전송방식을 사용
+       따라서 보안상 문제가 있는 Telnet대신에 사용
+       패킷 전송을 도청해서 볼 수 있는 Wireshark를 사용하면 확인
+
 데몬명 : sshd.service
-패키지명 : 
+패키지명 : openssh*
 - ssh는 telnet과 마찬가지로 원격접속 프로토콜이지만
   텔넷과의 차이점은 보안의 유무입니다
 - telnet은 데이터 전송 할 때 평문으로 정보를 보내지만
   ssh는 데이터를 암호화 해서 전송 하기 때문에
   ssh로 통신을 하면 데이터 노출에 위험이 줄어들게 됩니다
+  
+telnet 패키지가 있을시 삭제
+# rpm -qa | grep telnet
+# rpm -e telnet
+# rpm -e telnet-server
+
+ISO 마운트후
+# cd /mnt/Packages
+# ls -l openssh*
+관련패키지 전부 설치! (중복안되게 조심)
+
+-실습(환경설정을 이용한 실습)
+-실습(명령어를 이용한 실습)
+# ssh 192.168.10.128    
+	: 현재 로그인 되어 있는 사용자명과 동일한 계정으로 접속시도
+# ssh -l samadal 192.168.10.128   
+# ssh samadal@192.168.10.128
+	: 일반 사용자로 로그인 접속 시도
+	
+1) 아이피 주소가 다른 컴퓨터 2대 준비
+2) 게이트 웨이와 DNS에 서로의 주소를 입력
+3) 터미널창에서 ssh로 상대방의 주소를 입력하여 로그인 해본다.
+scp 
+
+sftp
+
 
 # mkdir /backup
 # cp /etc/ssh/sshd_config /backup/
@@ -173,7 +207,9 @@ SHH : Secure Shell (port번호 : 22 )
 나중에 문제가 생기면 backup 디렉터리 안에 들어있는 파일을 복사해서
 사용합니다.
 
-vi /etc/ssh/sshd_config
+# vi /etc/ssh/sshd_config : ssh 설정파일
+# vi /etc/services  (이미 ssh전용 포트인 22번포트가 등록 되어 있기 때문에
+port 번호를 바꿔도 소용이 없다 == 오류
 
 se nu : 줄번호 확인용
 
