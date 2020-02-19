@@ -191,14 +191,34 @@ ISO 마운트후
 # ssh -l samadal 192.168.10.128   
 # ssh samadal@192.168.10.128
 	: 일반 사용자로 로그인 접속 시도
-	
+	  파일 전송에 관련된 명령이 아니라
+	  접속에 관련된 명령이다. 따라서 접속 후
+	  scp 또는 sftp를 이용해서 다운로드 해야한다.
 1) 아이피 주소가 다른 컴퓨터 2대 준비
 2) 게이트 웨이와 DNS에 서로의 주소를 입력
 3) 터미널창에서 ssh로 상대방의 주소를 입력하여 로그인 해본다.
 
--scp 
+-scp (Secure Copy)
+ 개요 : 원격지의 데이터 복사하기 
+ - SSH Service가 구성되어 있는 System을 대상으로 원격 복사 할 수 있는 프로그램 이며
+   "openssh-clients" 패키지에 포함 되어 있다.
+ # scp [Option] [원본파일위치] [계정명]@[]
+ # scp samadal@192.168.10.128:/test/scp : 오류
+ 					: scp의 권한 변경(757) 후 업로드해야 한다.
 
 -sftp
+   - 파일이 있는 곳에서 업로드
+     # touch /tmp/A; mkdir /test
+     # chmod 757 /test
+     # cd /tmp
+     # sftp samadal@192.168.10.128
+     sftp> pwd
+     sftp> cd /test
+     sftp> put A
+   - 파일 없는 곳에서 업로드 (오류)
+   - 파일을 받고자 하는 곳에서 다운로드
+   # sftp samadal@192.168.10.128 	: 오류
+   					: sftp의 권한 변경(757) 후 업로드해야 한다.
 
 
 # mkdir /backup
