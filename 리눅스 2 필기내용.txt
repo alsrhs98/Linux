@@ -393,7 +393,7 @@ server에서 포트번호 바꾼뒤 방화벽까지 뚫어줘야함.
 
 + 위 내용 참고
 --------------------------------------------------
-
+==============================================================================
 FTP 서버
 - 파일 전송 프로토콜(File Transfer Protocol)
 - FTP를 사용하면 클라이언트가 FTP 서버에 접속해서
@@ -497,7 +497,33 @@ listen_port = 변경하고 싶은 포트번호
 방화벽 등록
 # firewall-cmd --permanent --add-port=8080/tcp
 
-==================================
+====================================================================================
+*VNS (Virtual Network Computing)
+-개요 : CLI Mode 가 아닌 GUI Mode로 리눅스 시스템을 관리하기 위한 서비스
+-패키지 /서비스/ 포트 : tigervnc*/vncserver/590x~?
+		      VNC는 서비와 데몬이 없다.
+		      패키지 설치 시 'fltk'는 '--nodeps' 로 설치한다.
+패키지 (tip : 중간에 안되는게 있으면(=의존성문제) rpm -ivh --nodeps로 설치하자!!)
+tigervnc-server-minimal-1.8.0-17.el7.x86_64
+tigervnc-license-1.8.0-17.el7.noarch
+tigervnc-1.8.0-17.el7.x86_64
+tigervnc-server-module-1.8.0-17.el7.x86_64
+tigervnc-server-1.8.0-17.el7.x86_64
+tigervnc-server-applet-1.8.0-17.el7.noarch
+tigervnc-icons-1.8.0-17.el7.noarch
+
+
+
+-사용법
+	vncviewer 서버IP:session
+	
+	# cd /root/.vnc 로 가서
+	# ls -l 로 확인
+	session번호가 몇번인지 확인 가능 / #cat *.pid 로 pid(ProcessID) 확인가능
+	# kill (알아본pid번호) : vnc 접속 종료
+-실습
+	#vnc
+====================================================================================
 DNS(Domain Name System)
 - DNS 는 호스트를 포함한 도메인의 풀네임(FQDN)을 IP로 변환시켜서
 - 클라이언트에게 제공해주는 기능을 가지고 있습니다
