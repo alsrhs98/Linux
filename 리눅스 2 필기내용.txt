@@ -487,6 +487,8 @@ ftp 설정 파일 = /etc/vsftpd/vsftpd.conf
 ===================================================================================================
 *로그 파일 분석
 - 어떤 놈들이 들어와서 불법적으로 다운로드를 해갔는지 볼 수 있다.
+- 일주일 단위로 백업됨 ( 월요일에 와서확인)
+- # rdate -s time.bora.net : 날짜/시간 정보를 타임서버에서 가져와 정확하게 일치시키야 한다.
 # vi /var/log/xferlog
 Wed Jan 22 09:31:04 2020 1 ::ffff:192.168.10.1 7 /pub/index.html b _ o a chrome@example.com ftp 0 * c
 Wed Jan 22 09:31:04 2020 1 ::ffff:192.168.10.1 7 /pub/index.html b _ o a chrome@example.com ftp 0 * c
