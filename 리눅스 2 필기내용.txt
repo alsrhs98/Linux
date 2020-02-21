@@ -405,6 +405,7 @@ FTP 서비스명 : ftp
 데몬명 : vsftpd
 패키지명 : vsftpd
 포트번호 : 21
+환경설정 파일 : /etc/vsftpd/vsfrpd.conf
 
 1. iso마운트후 패키지 다운
 
