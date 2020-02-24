@@ -544,8 +544,20 @@ tigervnc-icons-1.8.0-17.el7.noarch
 -실습
 	#vnc
 ====================================================================================
+*Auto Mount(/etc/fstab,fILE sYSTEM tabLE)
 HDD(1GB) : 10,200,200,300,200
 M.P	 : Linux, Clang,Net,Ms,Anon
+
+	# mkfs 를 이용하여 포멧 !!! (모르면 검색)
+	# vi /etc/fstab
+	 sdb1		/Linux			ext4 defaults    1 2  <-- 복사 후 나머지 4개도 똑같이
+	 
+만약  HDD(1GB) 제거시
+부팅중
+컨트 + 알트 + insert 
+e
+
+rw  init=/bin/bash 그걸로 들어가서  fstab 적었던 내용 
 ====================================================================================
 DNS(Domain Name System)
 - DNS 는 호스트를 포함한 도메인의 풀네임(FQDN)을 IP로 변환시켜서
