@@ -597,7 +597,33 @@ rw  init=/bin/bash 그걸로 들어가서  fstab 적었던 내용
 # dh -f : 마운트정보 확인
 - 마운트 정보를 확인했을때 최상위 디렉터리 마운트...모르겠다 
 
-	    
+-실습
+# vi +'/PermitRootLogin' /etc/ssh/sshd_config 에가서 no가 있음 yes로 바꿈
+# ps -ef | grep samadal 확인후 프로세스가 있을경우 kill로 죽임
+# usermod -d /nfs_client samadal
+# mv /home/samadal /nfs_client/ls- 
+# ls /nfs_client /nfs_server
+
+
+----------------------------
+<파티션>              ----------->     <M.P>
+/dev/sdb1               <mount>        /sdb		<NFS Server> 
+							     ||
+							     ||  <NFS>
+							     || 
+							     ▽
+192.168.10.128:/sdb   ----------->     /nfs_client      <NFS Client>
+	    		<mount>
+			
+----------------------------
+서버(128)    			클라이언트(129)
+-nfs 패키지 설치		      - nfs 패키지 설치
+-nfs 방화벽 등록		      - nfs이용하여 128의 하드디스크 연결
+-하드웨어 추가 후 파티션 나눔
+-하드 오토 마운트
+-/etc/export에서  129 등록
+-
+
 ====================================================================================
 DNS(Domain Name System)
 - DNS 는 호스트를 포함한 도메인의 풀네임(FQDN)을 IP로 변환시켜서
