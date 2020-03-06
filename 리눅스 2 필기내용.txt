@@ -658,7 +658,39 @@ Net ID = 도메인
 Host ID = 호스트
 
 -패키지(bind*)/포트(53/udp,53/tcp)/ 서비스(dns) /데몬(named)
-
+-중요 관련 파일
+	- /etc/hosts : 누군가가 도메인 관련 서비스를 사용하고자 할때 제일 먼저 반응하는 파일
+	   192.168.10.128	 www.samadal.com	samadal.com
+	   
+	- /etc/resolv.conf
+	  domain samadal.com
+	  search samadal.com
+	  nameserver 192.168.10.128 (IP)
+	  nameserver 192.168.10.2   (GateWay)
+	  nameserver 192.168.63.1   (1st SuperDNS)
+	  
+	- /etc/naemd.conf : 53번 포트를 열어주는 역할
+	  13  listen-on port 53 { any; }; : 외부에서 들어오는것도 받아준다.
+	  21  allow-query  { any; }; : 누구든지 질문하는것을 허락한다.
+	  33 recursion no; : 단, 다시 질문 하지마.
+	  
+	- /etc/named.rfc1912.zones
+	  2번째 zone을 복사 후 맨 밑에 붙여넣기
+	  zone "samadal.com"IN{
+	  	type master;
+		file "samadal.com.zone";
+		allow-update { any; };
+		allow-transfer { any; };
+	  };
+	  5번째 zone을 복사 후 맨 밑에 붙여넣기
+	  zone "10.168.192.in-addr.arpa" IN{
+	  	type master;
+		file "samadal.com.rev";
+		allow-update { any; };
+		allow-transfer { any; };
+	  };
+- Fully Qualified Domain Name(FQDN): 호스트를 포함한 전체 도메인 이름
+- Alias :  동격 일때   - Nickname : 별명 동격아니여도 됨
 =======================================================================
 
 이진수
@@ -776,7 +808,7 @@ vi /etc/hosts
 2. /etc/resolv.conf (client 쪽)
 - 클라이언트가 자신이 모르는 FQDN을 사용하면 DNS에게 질의를 보내는데
 - 질의를 보낼 DNS를 결정하는 설정 파일입니다
-- nameserver 뒤에 명시된 IP가 DNS의 IP이며 도메인을 사용하면 resolv.conf 안에
+- nameserver 뒤에 명시된 IP가 DNS의 IP이며 도:메인을 사용하면 resolv.conf 안에
 - 등록된 nameserver 에게 질의를 보냅니다
 - nameserver는 여러개 사용이 가능한데 맨 처음에 있는 nameserver에게 가장 먼저
 - 질의를 보내지만 만약 그 namerserver에게 답변을 받지 못한다면 그 아래에 있는
@@ -897,7 +929,10 @@ $TTL 1D
 ns      IN      A       192.168.10.128		  
 www     IN      A       10.10.10.10
 
+TTL(Time To Live) : 생존시간
 SOA = DNS안에 데이터가 인증된 데이터라는 것을 알려주는 항목 입니다
+IN(class 라고 불림) => Internet으로 생각하자
+@ : 
 NS레코드 = DNS가 사용 할 도메인을 정의하는 레코드입니다
 A레코드 = 도메인에 IPv4를 설정 할 때 사용하는 레코드 입니다
 ns,www = naver.com 도메인에 사용 할 호스트 이름 과 Host ID가 들어옵니다
